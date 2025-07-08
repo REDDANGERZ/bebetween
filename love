@@ -1,0 +1,27 @@
+using UnityEngine;
+using UnityEngine.SceneManagement; // Import the SceneManagement namespace to use SceneManager
+
+public class love : MonoBehaviour
+{
+    public GameObject wewin; // Reference to the particle system GameObject
+                             // Variable to store the current scene
+                             // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+       wewin.SetActive(false); // Deactivate the particle system at the start 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("p2"))
+        {
+            // Load the scene with index 1 when colliding with an object tagged "p1"
+           wewin.SetActive(true); // Activate the particle system when colliding with an object tagged "p2"
+        }
+    }
+}
