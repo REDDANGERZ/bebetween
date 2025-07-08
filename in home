@@ -1,0 +1,27 @@
+using UnityEngine;
+using System.Collections.Generic; // Import the System.Collections.Generic namespace to use List
+
+public class homelove : MonoBehaviour
+{
+    public GameObject wewin;
+    private List<string> touchingObjects = new List<string>(); // List to keep track of objects currently touching
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        wewin.SetActive(false); // Deactivate the particle system at the start
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        touchingObjects.Add(other.gameObject.name); // Add the name of the object to the list when it enters the trigger
+        if (touchingObjects.Contains("p1") && touchingObjects.Contains("p2"))
+        {
+            wewin.SetActive(true); // Activate the particle system when both ObjectA and ObjectB are touching
+        }
+    }
+}
