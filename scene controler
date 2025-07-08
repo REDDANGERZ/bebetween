@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SCENES_CONTROLLER : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void one()
+    {
+        SceneManager.LoadScene(1); // Load scene with index 1
+    }
+    public void two()
+    {
+        SceneManager.LoadScene(2); // Load scene with index 2
+    }
+    public void three()
+    {
+        SceneManager.LoadScene(3); // Load scene with index 3
+    }
+    public void four()
+    {
+        SceneManager.LoadScene(4); // Load scene with index 4
+    }
+    public void five()
+    {
+        SceneManager.LoadScene(5); // Load scene with index 5
+    }
+    public void six()
+    {
+        SceneManager.LoadScene(6); // Load scene with index 6
+    }
+    public void seven()
+    {
+        SceneManager.LoadScene(7); // Load scene with index 7
+    }
+    public void eight()
+    {
+        SceneManager.LoadScene(8); // Load scene with index 8
+    }
+    public void zero()
+    {
+        SceneManager.LoadScene(0); // Load scene with index 0
+    }
+    public void quit()
+    {
+        Application.Quit(); // Quit the application
+    }
+    public void LoadSceneByIndex(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+}
+
+
