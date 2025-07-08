@@ -1,0 +1,102 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Import the SceneManagement namespace to use SceneManager
+using System.Collections; // Import the System.Collections namespace to use IEnumerator
+
+public class move1 : MonoBehaviour
+{
+    public float speed = 5f; // Speed of the object
+    Rigidbody2D rb; // Reference to the Rigidbody2D component
+     // Variable to store movement input
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    bool isGrounded = false; // Variable to check if the object is grounded
+    bool facingRight = true;
+    public int health = 3; // Variable to store the health of the player
+    public Text healthText; // Reference to the UI Text component to display health
+    public GameObject nenewin;
+
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component attached to this GameObject
+        // Deactivate the particle system at the start
+        nenewin.SetActive(false); // Deactivate the particle system at the start
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.W) && isGrounded == true)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 6); // Move up
+            isGrounded = false; // Reset isGrounded to false after jumping
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -6); // Move down
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            rb.linearVelocity = new Vector2(-speed, rb.linearVelocity.y); // Move left
+            facingRight = false; // Set facingRight to false when moving left
+            transform.eulerAngles = new Vector3(0, 180, 0); // Flip the sprite to face left
+                                                          // Flip the sprite to face left
+                                                          // Activate the particle system when moving left
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y); // Move right
+            facingRight = true; // Set facingRight to true when moving right
+            transform.eulerAngles = new Vector3(0, 0, 0); // Flip the sprite to face right
+                                                            // Activate the particle system when moving right
+            // Reset rotation to face right
+        }
+        if (health <= 0) // Check if health is less than or equal to 0
+        {
+           nenewin.SetActive(true); // Activate the particle system when health is 0
+           Destroy(gameObject);
+           
+        }
+        healthText.text = "HP: " + health; // Update the health text UI with the current health value
+        
+        if (health > 3) // Check if health is greater than 3
+        {
+            health = 3; // Reset health to 3 if it exceeds 3
+        }
+
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+
+            isGrounded = true; // Set isGrounded to true when colliding with the ground
+        }
+      
+        if (collision.gameObject.CompareTag("obst"))
+        {
+            health--; // Reload the current scene when colliding with an object tagged "obst"
+        }
+
+        
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("health"))
+        {
+            health++; // Load the "win" scene when colliding with an object tagged "win"
+            StartCoroutine(TemporarilyDisable(other.gameObject, 5f));
+        }
+    }
+    IEnumerator TemporarilyDisable(GameObject obj, float delay)
+    {
+        obj.SetActive(false);             // ????? ??????
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(true);              // ?????? ??? ????
+    }
+
+
+
+}
+
